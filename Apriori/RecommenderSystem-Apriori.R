@@ -1,0 +1,23 @@
+rm(list=ls(all=TRUE))
+setwd("C:\\Users\\SaiNampally\\Desktop\\Assign")
+data = read.csv("Data.csv")
+data$Name <- NULL
+data$ProductNumber <- NULL
+library(arules)
+library(arulesViz)
+data$MakeFlag <- as.factor(data$MakeFlag)
+data$ProductID <- as.factor(data$ProductID)
+data$FinishedGoodsFlag <- as.factor(data$FinishedGoodsFlag)
+data$SafetyStockLevel <- as.factor(data$SafetyStockLevel)
+data$ReorderPoint <- as.factor(data$ReorderPoint)
+data$StandardCost <- as.factor(data$StandardCost)
+data$ListPrice <- as.factor(data$ListPrice)
+data$DaysToManufacture <- as.factor(data$DaysToManufacture)
+
+a <- t(data)
+a <- as.data.frame(a)
+rules <- apriori(a, parameter = list(sup = 0.01, conf = 0.01, target="rules"))
+rules<-sort(rules, decreasing=TRUE,by="confidence")
+rules<-sort(rules, decreasing=TRUE,by="confidence")
+inspect(rules)
+summary(rules)
